@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoluzionibSmart</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        h2 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        label, button {
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            background-color: #f2f2f2;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .form-section {
+            display: none;
+        }
+        .back-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: #e53935;
+        }
+        .recent-container {
+            margin-top: 20px;
+            display: none;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .recent-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .recent-container li {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .recent-container li span {
+            font-weight: bold;
+        }
+        .icon-container {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+        }
+        .icon-container button {
+            font-size: 1.2em;
+            padding: 20px;
+            margin: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 150px;
+        }
+        .icon-container button:hover {
+            background-color: #45a049;
+        }
+        .clear-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        .clear-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    <h2>SoluzionibSmart</h2>
+    
+    <!-- Icone cliccabili -->
+    <div class="icon-container">
+        <!-- Concentrazione molare -->
+        <button onclick="showForm('1')">Calcola Concentrazione molare</button>
+        
+        <!-- Massa da pesare -->
+        <button onclick="showForm('2')">Calcola Massa da pesare</button>
+        
+        <!-- Quantità di soluzione da prelevare -->
+        <button onclick="showForm('3')">Calcola Quantità di soluzione</button>
+    </div>
+
+    <!-- Sezione del contenuto -->
+    <div class="container">
+        <!-- Form per Calcolare la Concentrazione molare -->
+        <div id="formConcentrazione" class="form-section">
+            <h3>Concentrazione molare</h3>
+            <label>Volume (L):</label>
+            <input type="number" id="volume" step="any">
+            <label>Massa (g):</label>
+            <input type="number" id="massa" step="any">
+            <label>Massa molare (g/mol):</label>
+            <input type="number" id="massam" step="any">
+            <button onclick="calcolaConcentrazione()">Calcola</button>
+            <button class="back-button" onclick="goBack()">Torna alla schermata iniziale</button>
+        </div>
+
+        <!-- Form per Calcolare la Massa da pesare -->
+        <div id="formMassa" class="form-section">
+            <h3>Massa da pesare</h3>
+            <label>Volume (L):</label>
+            <input type="number" id="volumeMassa" step="any">
+            <label>Concentrazione molare (mol/L):</label>
+            <input type="number" id="concentrazione" step="any">
+            <label>Massa molare (g/mol):</label>
+            <input type="number" id="massamMassa" step="any">
+            <button onclick="calcolaMassa()">Calcola</button>
+            <button class="back-button" onclick="goBack()">Torna alla schermata iniziale</button>
+        </div>
+
+        <!-- Form per Calcolare la Quantità di soluzione da prelevare -->
+        <div id="formSoluzione" class="form-section">
+            <h3>Quantità di soluzione da prelevare</h3>
+            <label>Concentrazione soluzione concentrata (mol/L):</label>
+            <input type="number" id="concConc" step="any">
+            <label>Concentrazione soluzione diluita (mol/L):</label>
+            <input type="number" id="concDil" step="any">
+            <label>Volume soluzione diluita (L):</label>
+            <input type="number" id="volDil" step="any">
+            <button onclick="calcolaSoluzione()">Calcola</button>
+            <button class="back-button" onclick="goBack()">Torna alla schermata iniziale</button>
+        </div>
+
+        <div id="risultato" class="result"></div>
+
+        <!-- Sezione recenti -->
+        <div id="recenti" class="recent-container">
+            <h4>Risultati recenti</h4>
+            <ul id="recent-list"></ul>
+            <button class="clear-button" onclick="clearRecentResults()">Cancella risultati recenti</button>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per mostrare i form
+        function showForm(scelta) {
+            document.querySelector(".icon-container").style.display = "none"; // Nascondi icone
+
+            // Nascondi tutti i form
+            document.getElementById("formConcentrazione").style.display = "none";
+            document.getElementById("formMassa").style.display = "none";
+            document.getElementById("formSoluzione").style.display = "none";
+
+            // Mostra il form selezionato
+            if (scelta == "1") {
+                document.getElementById("formConcentrazione").style.display = "block";
+            } else if (scelta == "2") {
+                document.getElementById("formMassa").style.display = "block";
+            } else if (scelta == "3") {
+                document.getElementById("formSoluzione").style.display = "block";
+            }
+        }
+
+        // Funzione per tornare alla schermata iniziale
+        function goBack() {
+            // Nascondi tutti i form
+            document.getElementById("formConcentrazione").style.display = "none";
+            document.getElementById("formMassa").style.display = "none";
+            document.getElementById("formSoluzione").style.display = "none";
+
+            // Mostra le icone
+            document.querySelector(".icon-container").style.display = "block";
+
+            // Cancella i dati dei form
+            resetFields();
+
+            // Mostra i risultati recenti
+            displayRecentResults();
+        }
+
+        // Funzione per resettare i campi dei form
+        function resetFields() {
+            document.getElementById("volume").value = '';
+            document.getElementById("massa").value = '';
+            document.getElementById("massam").value = '';
+            document.getElementById("volumeMassa").value = '';
+            document.getElementById("concentrazione").value = '';
+            document.getElementById("massamMassa").value = '';
+            document.getElementById("concConc").value = '';
+            document.getElementById("concDil").value = '';
+            document.getElementById("volDil").value = '';
+        }
+
+        // Funzione per calcolare la Concentrazione molare
+        function calcolaConcentrazione() {
+            let volume = parseFloat(document.getElementById("volume").value);
+            let massa = parseFloat(document.getElementById("massa").value);
+            let massam = parseFloat(document.getElementById("massam").value);
+
+            if (!isNaN(volume) && !isNaN(massa) && !isNaN(massam) && volume > 0 && massam > 0) {
+                let risultato = (massa / (massam * volume)).toFixed(4) + " mol/L";
+                document.getElementById("risultato").innerText = "Concentrazione molare: " + risultato;
+                storeRecentResult("Concentrazione molare", risultato);
+                resetFields();
+            } else {
+                alert("Inserisci valori validi.");
+            }
+        }
+
+        // Funzione per calcolare la Massa da pesare
+        function calcolaMassa() {
+            let volume = parseFloat(document.getElementById("volumeMassa").value);
+            let concentrazione = parseFloat(document.getElementById("concentrazione").value);
+            let massam = parseFloat(document.getElementById("massamMassa").value);
+
+            if (!isNaN(volume) && !isNaN(concentrazione) && !isNaN(massam) && volume > 0 && massam > 0) {
+                let risultato = (concentrazione * volume * massam).toFixed(4) + " g";
+                document.getElementById("risultato").innerText = "Massa da pesare: " + risultato;
+                storeRecentResult("Massa da pesare", risultato);
+                resetFields();
+            } else {
+                alert("Inserisci valori validi.");
+            }
+        }
+
+        // Funzione per calcolare la Quantità di soluzione
+        function calcolaSoluzione() {
+            let concConc = parseFloat(document.getElementById("concConc").value);
+            let concDil = parseFloat(document.getElementById("concDil").value);
+            let volDil = parseFloat(document.getElementById("volDil").value);
+
+            if (!isNaN(concConc) && !isNaN(concDil) && !isNaN(volDil) && concConc > 0 && concDil > 0 && volDil > 0) {
+                let volume = ((concDil * volDil) / concConc).toFixed(4) + " L";
+                document.getElementById("risultato").innerText = "Quantità da prelevare: " + volume;
+                storeRecentResult("Quantità da prelevare", volume);
+                resetFields();
+            } else {
+                alert("Inserisci valori validi.");
+            }
+        }
+
+        // Funzione per memorizzare i risultati recenti
+        function storeRecentResult(tipo, risultato) {
+            let recentList = JSON.parse(localStorage.getItem("recentResults")) || [];
+            recentList.unshift({ tipo: tipo, risultato: risultato });
+
+            if (recentList.length > 5) {
+                recentList.pop();
+            }
+
+            localStorage.setItem("recentResults", JSON.stringify(recentList));
+            displayRecentResults();
+        }
+
+        // Funzione per visualizzare i risultati recenti
+        function displayRecentResults() {
+            let recentList = JSON.parse(localStorage.getItem("recentResults")) || [];
+            let recentContainer = document.getElementById("recenti");
+            let recentListElement = document.getElementById("recent-list");
+
+            recentListElement.innerHTML = "";
+
+            if (recentList.length > 0) {
+                recentContainer.style.display = "block";
+
+                recentList.forEach(result => {
+                    let listItem = document.createElement("li");
+                    listItem.innerHTML = `<span>${result.tipo}:</span> ${result.risultato}`;
+                    recentListElement.appendChild(listItem);
+                });
+            } else {
+                recentContainer.style.display = "none";
+            }
+        }
+
+        // Funzione per cancellare i risultati recenti
+        function clearRecentResults() {
+            localStorage.removeItem("recentResults");
+            displayRecentResults();
+        }
+
+        // Visualizza i risultati recenti quando la pagina viene caricata
+        window.onload = function() {
+            displayRecentResults();
+        };
+    </script>
+</body>
+</html>
