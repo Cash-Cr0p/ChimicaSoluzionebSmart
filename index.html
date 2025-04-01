@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoluzionibSmart</title>
+    <title>SoluzioniSmart</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -103,22 +103,33 @@
         .icon-container {
             margin-bottom: 30px;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: center;
+            align-items: center;
             width: 100%;
+            flex-wrap: wrap;
         }
         .icon-container button {
             font-size: 1.2em;
-            padding: 20px;
-            margin: 10px;
+            padding: 30px;
+            margin: 20px;
             border: none;
             background-color: #4CAF50;
             color: white;
             border-radius: 8px;
             cursor: pointer;
             width: 150px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .icon-container button:hover {
             background-color: #45a049;
+        }
+        .icon-container button span {
+            margin-top: 10px;
+            font-size: 1em;
+            text-align: center;
         }
         .clear-button {
             background-color: #f44336;
@@ -137,18 +148,27 @@
     </style>
 </head>
 <body>
-    <h2>SoluzionibSmart</h2>
+    <h2>SoluzioniSmart</h2>
     
     <!-- Icone cliccabili -->
     <div class="icon-container">
         <!-- Concentrazione molare -->
-        <button onclick="showForm('1')">Calcola Concentrazione molare</button>
+        <button onclick="showForm('1')">
+            <i class="fas fa-flask"></i>
+            <span>Calcola Concentrazione molare</span>
+        </button>
         
         <!-- Massa da pesare -->
-        <button onclick="showForm('2')">Calcola Massa da pesare</button>
+        <button onclick="showForm('2')">
+            <i class="fas fa-weight"></i>
+            <span>Calcola Massa da pesare</span>
+        </button>
         
         <!-- Quantità di soluzione da prelevare -->
-        <button onclick="showForm('3')">Calcola Quantità di soluzione</button>
+        <button onclick="showForm('3')">
+            <i class="fas fa-tint"></i>
+            <span>Calcola Quantità di soluzione</span>
+        </button>
     </div>
 
     <!-- Sezione del contenuto -->
@@ -196,7 +216,7 @@
 
         <!-- Sezione recenti -->
         <div id="recenti" class="recent-container">
-            <h4>Risultati recenti</h4>
+            <h4>Risultati recenti</h3>
             <ul id="recent-list"></ul>
             <button class="clear-button" onclick="clearRecentResults()">Cancella risultati recenti</button>
         </div>
